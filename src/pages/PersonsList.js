@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { API_BASE_URL } from "../config/api";
-
 
 const PersonsList = () => {
   const [persons, setPersons] = useState([]);
@@ -8,7 +6,7 @@ const PersonsList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/get_person_data/`)
+    fetch(`https://backend-vercel-1cqc7cnq8-shaik-junaids-projects-35758ac6.vercel.app/api/get_person_data/`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch persons");
         return res.json();
