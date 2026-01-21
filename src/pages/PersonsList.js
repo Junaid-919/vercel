@@ -6,7 +6,7 @@ const PersonsList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`https://backend-vercel-77w9m8303-shaik-junaids-projects-35758ac6.vercel.app/api/get_person_data/`)
+    fetch("https://backend-vercel-beryl.vercel.app/api/get_person_data/")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch persons");
         return res.json();
