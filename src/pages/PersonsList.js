@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-const API_URL = "https://backend-vercel-beryl.vercel.app/api/get_person_data/";
+const API_URL = "https://backend-vercel-zeta-eight.vercel.app/api/get_person_data/";
 const PAGE_SIZE = 10;
 
 const PersonsList = () => {
