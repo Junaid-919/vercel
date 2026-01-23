@@ -32,7 +32,6 @@ const PersonsList = () => {
   // Initial fetch + auto refresh every 5 minutes
   useEffect(() => {
     fetchPersons();
-
     const interval = setInterval(fetchPersons, 5 * 60 * 1000);
     return () => clearInterval(interval);
   }, [fetchPersons]);

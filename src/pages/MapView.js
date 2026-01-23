@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polygon, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -8,17 +8,16 @@ const MapView = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch('https://backend-vercel-zeta-eight.vercel.app/api/get_location_data/');
+        if (!response.ok) throw new Error("Failed to fetch data");
         const result = await response.json();
         setLocations(result.latest_locations || []);
-
         setLoading(false);
       } catch (err) {
-        setError('Failed to fetch data');
+        setError(err.message || 'Failed to fetch data');
         setLoading(false);
       }
     };
@@ -31,14 +30,11 @@ const MapView = () => {
   return (
     <div>
       <h1>Executive Locations</h1>
-      
       <MapContainer center={[15.8287, 78.0380]} zoom={13} style={{ height: '400px', width: '100%' }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <MapClickHandler />
-        
         {locations.map((item, index) => (
           <Marker
             key={index}
