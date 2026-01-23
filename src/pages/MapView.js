@@ -11,18 +11,30 @@ const MapView = () => {
 useEffect(() => {
   const fetchData = async () => {
     try {
-      const response = await fetch('https://backend-vercel-zeta-eight.vercel.app/api/get_location_data/');
+      const response = await fetch(
+        'https://backend-vercel-zeta-eight.vercel.app/api/get_location_data/'
+      );
       if (!response.ok) throw new Error("Failed to fetch data");
+
       const result = await response.json();
-      setLocations(result || []); // <-- fix here
+      setLocations(result || []);
       setLoading(false);
     } catch (err) {
       setError(err.message || 'Failed to fetch data');
       setLoading(false);
     }
   };
+
+  // initial fetch
   fetchData();
+
+  // fetch every 5 seconds
+  const intervalId = setInterval(fetchData, 5000);
+
+  // cleanup on unmount
+  return () => clearInterval(intervalId);
 }, []);
+
 
 
   if (loading) return <div>Loading...</div>;
