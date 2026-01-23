@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Welcome from "./pages/Welcome";
 import PersonsList from "./pages/PersonsList";
-import MapView from "./MapView";
+import MapView from "./pages/MapView";
 
 function App() {
   return (
