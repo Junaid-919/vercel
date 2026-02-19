@@ -7,6 +7,7 @@ function BusStopScreen() {
   const [busStop, setBusStop] = useState(null);
   const [loading, setLoading] = useState(false);
 
+useEffect(() => {
   const fetchData = async () => {
     console.log("the bus stop number")
     console.log("is = "+JSON.stringify(bus_stop_number))
@@ -26,9 +27,8 @@ function BusStopScreen() {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [bus_stop_number]);
+  fetchData();
+}, [bus_stop_number]);
 
   if (loading) return <h3>Loading...</h3>;
   if (!busStop) return <h3>No data found</h3>;
