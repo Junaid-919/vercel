@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 function BusStopScreen() {
   const { bus_stop_number } = useParams();
@@ -7,28 +7,35 @@ function BusStopScreen() {
   const [busStop, setBusStop] = useState(null);
   const [loading, setLoading] = useState(false);
 
-useEffect(() => {
-  const fetchData = async () => {
-    console.log("the bus stop number")
-    console.log("is = "+JSON.stringify(bus_stop_number))
+  // ✅ Define fetchData outside useEffect
+  const fetchData = useCallback(async () => {
     try {
+      console.log("Bus stop number:", bus_stop_number);
+
       setLoading(true);
 
       const response = await fetch(
         `${process.env.VITE_API_URL}/api/busstops/number/${bus_stop_number}/`
       );
 
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
       const data = await response.json();
       setBusStop(data);
     } catch (error) {
       console.error("Error fetching data:", error);
+      setBusStop(null);
     } finally {
       setLoading(false);
     }
-  };
+  }, [bus_stop_number]);
 
-  fetchData();
-}, [bus_stop_number]);
+  // ✅ Proper dependency
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   if (loading) return <h3>Loading...</h3>;
   if (!busStop) return <h3>No data found</h3>;
