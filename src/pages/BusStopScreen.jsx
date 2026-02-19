@@ -10,8 +10,6 @@ function BusStopScreen() {
   // ✅ Define fetchData outside useEffect
   const fetchData = useCallback(async () => {
     try {
-      console.log("Bus stop number:", bus_stop_number);
-
       setLoading(true);
 
       const response = await fetch(
